@@ -35,6 +35,9 @@ def classDayOfWeek(filename):
     date_contact = {}
     categories_month = { "jan":1, "feb":2, "mar":3, "apr":4, "may":5, "jun":6,
                          "jul":7, "aug":8, "sep":9, "oct":10, "nov":11, "dec":12,}
+    categories_weekday ={"0":'Mon',"1":'Tues',"2":'Wed',"3":'Thur',"4":'Fri',"5":'Sat',
+                         "6":'Sun',}
+    
                    
     with open(filename) as f:
         next(f) # skip first line
@@ -52,8 +55,13 @@ def classDayOfWeek(filename):
                     date_contact[weekday] = 1
                     
                 
-    for lvl, val in date_contact.items():
-        print(lvl, ':', val,'-',  "{0:.2f}".format(val/nbPeople))
+#    for lvl, val in date_contact.items():
+#        print(lvl, ':', val,'-',  "{0:.2f}".format(val/nbPeople))
+
+    for i in range(len(categories_weekday)):
+        print(categories_weekday['%d' %i], ':',date_contact['%d' %i],'-', "{0:.2f}".format(date_contact['%d' %i]/nbPeople))
+
+    
 
 
 
