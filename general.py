@@ -146,6 +146,79 @@ def classDebts(filename):
     print(nbPeople)
 
 
+#12campaign
+def classCampaign(filename):
+    """Group people who said 'yes' by their nomber of contact during this campaign"""
+    nbPeople = 0
+    # categories in the datasset :by number
+    nb_contact = {}
+                   
+    with open(filename) as f:
+        next(f) # skip first line
+        for line in f:
+            person = splitLine(line)           
+            if person['y'] == 'yes':
+                contact = person['campaign']
+                nbPeople += 1
+
+                if contact in nb_contact:
+                    nb_contact[contact] += 1
+                else:
+                    nb_contact[contact] = 1
+                    
+                
+    for lvl, val in nb_contact.items():
+        print(lvl, ':', val,'-',  "{0:.2f}".format(val/nbPeople))    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#13pdays
+def classPdays(filename):
+    """Group people who said 'yes' by their days after last contact"""
+    verageAge = nbPeople = 0
+    MIN_AGE = 0
+    MAX_AGE = 800
+    STEP    = 50
+    dayGroup = {}
+    # categories in the datasset :by number
+    nb_days = {}
+                   
+    with open(filename) as f:
+        next(f) # skip first line
+        for line in f:
+            person = splitLine(line)           
+            if person['y'] == 'yes':
+                days = int(person['pdays'])
+                nbPeople += 1
+
+#                if days in nb_days:
+                if (days//STEP) in dayGroup:
+#                    nb_days[days] += 1
+                    dayGroup[days//STEP] +=1
+                else:
+#                    nb_days[days] = 1
+                    dayGroup[days//STEP] =1
+                                    
+    for lvl, val in dayGroup.items():
+        print(lvl, '*50-',lvl+1,'*50:', val,'-',  "{0:.2f}".format(val/nbPeople))
+
+
+
 #14.previous
 def classPrevious(filename):
     """Group people who said 'yes' by their nomber of contact"""
@@ -169,31 +242,6 @@ def classPrevious(filename):
                 
     for lvl, val in nb_contact.items():
         print(lvl, ':', val,'-',  "{0:.2f}".format(val/nbPeople))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 #15.poutcome
@@ -227,20 +275,24 @@ def classPoutcome(filename):
         
         
 def main():
-    classAge(FILENAME)
-    print('\n' + '*'*20 +'\n')
-    classJob(FILENAME)
-    print('\n' + '*'*20 +'\n')
-    classMarital(FILENAME)
-    print('\n' + '*'*20 +'\n')
-    classEducation(FILENAME)
-    print('\n' + '*'*20 +'\n')
-    classDebts(FILENAME)
-    print('\n' + '*'*20 +'\n')
-    classPoutcome(FILENAME)
-    print('\n' + '*'*20 +'\n')
-    classPrevious(FILENAME)
+#    classAge(FILENAME)
+#    print('\n' + '*'*20 +'\n')
+#    classJob(FILENAME)
+#    print('\n' + '*'*20 +'\n')
+#    classMarital(FILENAME)
+#    print('\n' + '*'*20 +'\n')
+#    classEducation(FILENAME)
+#    print('\n' + '*'*20 +'\n')
+#    classDebts(FILENAME)
+#    print('\n' + '*'*20 +'\n')
+#    classPoutcome(FILENAME)
+#    print('\n' + '*'*20 +'\n')
+#    classPrevious(FILENAME)
+#    print('\n' + '*'*20 +'\n')
+#    classPdays(FILENAME)
 
+    print('\n' + '*'*20 +'\n')
+    classCampaign(FILENAME)
 
     
     
