@@ -144,6 +144,86 @@ def classDebts(filename):
         print(format(i, '03b'), ':', "{0:.2f}".format(res[i]/nbPeople))
         
     print(nbPeople)
+
+
+#14.previous
+def classPrevious(filename):
+    """Group people who said 'yes' by their nomber of contact"""
+    nbPeople = 0
+    # categories in the datasset :by number
+    nb_contact = {}
+                   
+    with open(filename) as f:
+        next(f) # skip first line
+        for line in f:
+            person = splitLine(line)           
+            if person['y'] == 'yes':
+                contact = person['previous']
+                nbPeople += 1
+
+                if contact in nb_contact:
+                    nb_contact[contact] += 1
+                else:
+                    nb_contact[contact] = 1
+                    
+                
+    for lvl, val in nb_contact.items():
+        print(lvl, ':', val,'-',  "{0:.2f}".format(val/nbPeople))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#15.poutcome
+def classPoutcome(filename):
+    """Group people who said 'yes' by their outcome"""
+    nbPeople = 0
+    # categories in the datasset :"failure" "success" "nonexistent"
+    etat_outcome = { "failure":0, "success":0, "nonexistent":0, "unknown":0,"other":0,}
+                   
+    with open(filename) as f:
+        next(f) # skip first line
+        for line in f:
+            person = splitLine(line)           
+            if person['y'] == 'yes':
+                etat = person['poutcome']
+                nbPeople += 1
+
+                if etat in etat_outcome:
+                    etat_outcome[etat] += 1
+                else:
+                    print(etat)
+                
+    for lvl, val in etat_outcome.items():
+        print(lvl, ':', val,'-',  "{0:.2f}".format(val/nbPeople))
+    
+    
+    
+    
+    
+    
         
         
 def main():
@@ -156,6 +236,12 @@ def main():
     classEducation(FILENAME)
     print('\n' + '*'*20 +'\n')
     classDebts(FILENAME)
+    print('\n' + '*'*20 +'\n')
+    classPoutcome(FILENAME)
+    print('\n' + '*'*20 +'\n')
+    classPrevious(FILENAME)
+
+
     
     
 if __name__ == '__main__':
