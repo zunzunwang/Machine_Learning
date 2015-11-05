@@ -145,10 +145,66 @@ def classDebts(filename):
         
     print(nbPeople)
 
+#11duration
+def classDuration(filename):    
+    """Group people who said 'yes' by their days after last contact"""
+    nbPeople_yes = 0
+    nbPeople_no  = 0
+    STEP    = 60
+    durationGroup_yes = {}
+    durationGroup_no  = {}
+
+                   
+    with open(filename) as f:
+        next(f) # skip first line
+        for line in f:
+            person = splitLine(line)           
+            if person['y'] == 'yes':
+                duration = int(person['duration'])
+                nbPeople_yes += 1
+
+                if (duration//STEP) in durationGroup_yes:
+                    durationGroup_yes[duration//STEP] +=1
+                else:
+                    durationGroup_yes[duration//STEP] =1
+                    
+            else:
+                duration = int(person['duration'])
+                nbPeople_no += 1
+
+                if (duration//STEP) in durationGroup_no:
+                    durationGroup_no[duration//STEP] +=1
+                else:
+                    durationGroup_no[duration//STEP] =1
+            
+    print('for Group "yes"')
+    for lvl, val in durationGroup_yes.items():
+        print(lvl, 'm-',lvl+1,'m:', val,'-',  "{0:.2f}".format(val/nbPeople_yes))
+    print('\n' + '*'*30 +'\n')
+    print('for Group "no"')
+    for lvl, val in durationGroup_no.items():
+        print(lvl, 'm-',lvl+1,'m:', val,'-',  "{0:.2f}".format(val/nbPeople_no))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #12campaign
 def classCampaign(filename):
-    """Group people who said 'yes' by their nomber of contact during this campaign"""
+    """Group people who said 'yes' by their number of contact during this campaign"""
     nbPeople = 0
     # categories in the datasset :by number
     nb_contact = {}
@@ -170,33 +226,14 @@ def classCampaign(filename):
     for lvl, val in nb_contact.items():
         print(lvl, ':', val,'-',  "{0:.2f}".format(val/nbPeople))    
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 #13pdays
 def classPdays(filename):
     """Group people who said 'yes' by their days after last contact"""
     verageAge = nbPeople = 0
-    MIN_AGE = 0
-    MAX_AGE = 800
     STEP    = 50
     dayGroup = {}
     # categories in the datasset :by number
-    nb_days = {}
+    #    nb_days = {}
                    
     with open(filename) as f:
         next(f) # skip first line
@@ -221,7 +258,7 @@ def classPdays(filename):
 
 #14.previous
 def classPrevious(filename):
-    """Group people who said 'yes' by their nomber of contact"""
+    """Group people who said 'yes' by their number of contact"""
     nbPeople = 0
     # categories in the datasset :by number
     nb_contact = {}
@@ -291,8 +328,10 @@ def main():
 #    print('\n' + '*'*20 +'\n')
 #    classPdays(FILENAME)
 
+#    print('\n' + '*'*20 +'\n')
+#    classCampaign(FILENAME)
     print('\n' + '*'*20 +'\n')
-    classCampaign(FILENAME)
+    classDuration(FILENAME)
 
     
     
